@@ -4,7 +4,15 @@
   outputs =
     { self }:
     {
-      nixosModules.howdy = { ... }: { };
+      nixosModules.howdy =
+        { lib, config }:
+        {
+          imports = [
+            ./module/howdy.nix
+            ./module/linux-enable-ir-emitter.nix
+            ./module/security.nix
+          ];
+        };
       overlays.default = self.overlays.howdy;
       overlays.howdy = final: prev: {
         linux-enable-ir-emitter = final.callPackage ./linux-enable-ir-emitter.nix { };
