@@ -1,11 +1,11 @@
 { config, ... }:
 {
-  config.security.pam.services.sudo.rules.auth = {
+  config.security.pam.services.login.rules.auth = {
     howdy = {
       enable = true;
       control = "sufficient";
       modulePath = "${config.services.howdy.package}/lib/security/pam_howdy.so";
-      order = config.security.pam.services.sudo.rules.auth.unix.order - 10;
+      order = config.security.pam.services.sudo.rules.auth.unix.order - 500;
     };
   };
 }
