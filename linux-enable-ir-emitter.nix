@@ -40,6 +40,8 @@ stdenv.mkDerivation rec {
     (opencv.override { enableGtk3 = true; })
   ];
 
+  env.NIX_CFLAGS_COMPILE = "-Wno-error=alloc-zero";
+
   meta = {
     description = "Provides support for infrared cameras that are not directly enabled out-of-the box";
     homepage = "https://github.com/EmixamPP/linux-enable-ir-emitter";
