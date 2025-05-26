@@ -1,9 +1,9 @@
 { lib, config, ... }:
 let
-  cfg = config.security.pam.services.howdyAuth;
+  cfg = config.howdy-module.security.pam.services.howdyAuth;
 in
 {
-  options.security.pam.services.howdyAuth = lib.mkOption {
+  options.howdy-module.security.pam.services.howdyAuth = lib.mkOption {
     default = config.services.howdy.enable;
     defaultText = lib.literalExpression "config.services.howdy.enable";
     type = lib.types.bool;
