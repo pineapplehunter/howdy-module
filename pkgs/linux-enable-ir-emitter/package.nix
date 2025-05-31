@@ -15,13 +15,13 @@
 }:
 stdenv.mkDerivation rec {
   pname = "linux-enable-ir-emitter";
-  version = "6.0.6";
+  version = "6.1.1";
 
   src = fetchFromGitHub {
     owner = "EmixamPP";
     repo = "linux-enable-ir-emitter";
     rev = version;
-    hash = "sha256-zQRIHPcinJsCfy55sVPJT4NM2PS93zBfuRsEhNqA+rc=";
+    hash = "sha256-Pi+PnhuvYXJEScMBhWDlo22iOlWpNFW0Q0OVjRkGpww=";
   };
 
   nativeBuildInputs = [
