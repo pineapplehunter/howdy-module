@@ -71,7 +71,7 @@ let
 in
 stdenv.mkDerivation {
   pname = "howdy";
-  version = "2.6.1-unstable-2024-05-04";
+  version = "2.6.1";
 
   src = fetchFromGitHub {
     owner = "boltgolt";
