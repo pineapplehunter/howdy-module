@@ -19,7 +19,6 @@ Add the nixosModule to your configuration and enable the services
   ];
 
   services.howdy.enable = true;
-  services.howdy.settings.video.dark_threshold = 90;
   services.linux-enable-ir-emitter.enable = true;
 }
 ```
