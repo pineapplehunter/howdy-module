@@ -1,0 +1,12 @@
+diff --git a/howdy-gtk/meson.build b/howdy-gtk/meson.build
+index f497056..d705ef2 100644
+--- a/howdy-gtk/meson.build
++++ b/howdy-gtk/meson.build
+@@ -25,6 +25,7 @@ sources = files(
+ )
+ 
+ py = import('python').find_installation(
++    paths_dict.get('python_path')
+     # modules: ['gi', 'elevate']
+ )
+ py.dependency()

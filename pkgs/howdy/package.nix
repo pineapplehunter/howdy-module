@@ -71,37 +71,30 @@ let
 in
 stdenv.mkDerivation {
   pname = "howdy";
-  version = "2.6.1";
+  version = "2.6.1-unstable-2025-02-02";
 
   src = fetchFromGitHub {
     owner = "boltgolt";
     repo = "howdy";
-    rev = "aa75c7666c040c6a7c83cd92b9b81a6fea4ce97c";
-    hash = "sha256-oYw2xoqLdERy51fYk6zLUZ5Agkr6OKFcvUnFgvHH5rU=";
+    rev = "c4521c14ab8c672cadbc826a3dbec9ef95b7adb1";
+    hash = "sha256-y/BVj6DdnppIegAEm2FtrOdiqF23Q+U6v2EZ4A9H7iU=";
   };
 
   patches = [
     # Don't install the config file. We handle it in the module.
     ./dont-install-config.patch
-
-    # Wait for the direct child process (auth client), and not ANY child
-    # process, which may allow authentication when it shouldn't
-    # https://github.com/boltgolt/howdy/issues/969
-    ./waitpid.patch
+    ./python-path.patch
   ];
 
   mesonFlags = [
     "-Dconfig_dir=/etc/howdy"
     "-Duser_models_dir=/var/lib/howdy/models"
+    "-Dpython_path=${py}/bin/python"
   ];
 
   postPatch = ''
     substituteInPlace howdy/src/cli/config.py \
-      --replace '/bin/nano' 'nano'
-
-    # wrap howdy and howdy-gtk
-    substituteInPlace howdy/src/pam/main.cc \
-      --replace "python3" "${py}/bin/python"
+      --replace-fail '/bin/nano' 'nano'
   '';
 
   nativeBuildInputs = [
@@ -168,4 +161,3 @@ stdenv.mkDerivation {
     maintainers = with lib.maintainers; [ fufexan ];
   };
 }
-
