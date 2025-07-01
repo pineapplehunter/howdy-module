@@ -65,13 +65,13 @@ let
 in
 stdenv.mkDerivation {
   pname = "howdy";
-  version = "2.6.1-unstable-2025-02-02";
+  version = "2.6.1-unstable-2025-06-22";
 
   src = fetchFromGitHub {
     owner = "boltgolt";
     repo = "howdy";
-    rev = "c4521c14ab8c672cadbc826a3dbec9ef95b7adb1";
-    hash = "sha256-y/BVj6DdnppIegAEm2FtrOdiqF23Q+U6v2EZ4A9H7iU=";
+    rev = "d3ab99382f88f043d15f15c1450ab69433892a1c";
+    hash = "sha256-Xd/uScMnX1GMwLD5GYSbE2CwEtzrhwHocsv0ESKV8IM=";
   };
 
   patches = [
@@ -85,11 +85,6 @@ stdenv.mkDerivation {
     "-Duser_models_dir=/var/lib/howdy/models"
     "-Dpython_path=${py}/bin/python"
   ];
-
-  postPatch = ''
-    substituteInPlace howdy/src/cli/config.py \
-      --replace-fail '/bin/nano' 'nano'
-  '';
 
   nativeBuildInputs = [
     bzip2
