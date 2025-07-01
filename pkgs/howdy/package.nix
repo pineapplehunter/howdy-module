@@ -43,13 +43,7 @@ let
   # wrap howdy and howdy-gtk
   py = python3.withPackages (p: [
     p.elevate
-    # TODO: remove overrides when https://github.com/NixOS/nixpkgs/pull/273665 is merged
-    (p.face-recognition.override {
-      dlib = p.dlib.overrideAttrs (_: {
-        doCheck = false;
-        doInstallCheck = false;
-      });
-    })
+    p.face-recognition
     p.keyboard
     (p.opencv4.override { enableGtk3 = true; })
     p.pycairo
