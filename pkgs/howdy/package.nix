@@ -23,20 +23,20 @@
 let
   data =
     let
-      baseurl = "https://github.com/davisking/dlib-models/raw/daf943f7819a3dda8aec4276754ef918dc26491f";
+      baseurl = "https://github.com/davisking/dlib-models/raw/fd81b6308a6a73d4ce08859eb2f4b628a21e27a2";
     in
     {
       "dlib_face_recognition_resnet_model_v1.dat" = fetchurl {
         url = "${baseurl}/dlib_face_recognition_resnet_model_v1.dat.bz2";
-        sha256 = "0fjm265l1fz5zdzx5n5yphl0v0vfajyw50ffamc4cd74848gdcdb";
+        hash = "sha256-q7H2EEHkNEZYVc6Bwr1UboMNKLy+2NJ/++W7QIsRVTo=";
       };
       "mmod_human_face_detector.dat" = fetchurl {
         url = "${baseurl}/mmod_human_face_detector.dat.bz2";
-        sha256 = "117wv582nsn585am2n9mg5q830qnn8skjr1yxgaiihcjy109x7nv";
+        hash = "sha256-256eQPCSwRjV6z5kOTWyFoOBcHk1WVFVQcVqK1DZ/IQ=";
       };
       "shape_predictor_5_face_landmarks.dat" = fetchurl {
         url = "${baseurl}/shape_predictor_5_face_landmarks.dat.bz2";
-        sha256 = "0wm4bbwnja7ik7r28pv00qrl3i1h6811zkgnjfvzv7jwpyz7ny3f";
+        hash = "sha256-bnh7vr9cnv23k/bNHwIyMMRBMwZgXyTymfEoaflapHI=";
       };
     };
 
