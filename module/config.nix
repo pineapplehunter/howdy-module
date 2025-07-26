@@ -44,4 +44,3 @@
     gtk_stdout = false;
   };
 }
-
