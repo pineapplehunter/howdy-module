@@ -41,14 +41,21 @@ let
     };
 
   # wrap howdy and howdy-gtk
-  py = python3.withPackages (p: [
-    p.elevate
-    p.face-recognition
-    p.keyboard
-    (p.opencv4.override { enableGtk3 = true; })
-    p.pycairo
-    p.pygobject3
-  ]);
+  py =
+    (python3.withPackages (p: [
+      p.elevate
+      p.face-recognition
+      p.keyboard
+      (p.opencv4.override { enableGtk3 = true; })
+      p.pycairo
+      p.pygobject3
+    ])).override
+      (old: {
+        # https://github.com/NixOS/nixpkgs/pull/216245#issuecomment-3076597039
+        makeWrapperArgs = (old.makeWrapperArgs or [ ]) ++ [
+          "--set OMP_NUM_THREADS 1"
+        ];
+      });
 
   desktopItem = makeDesktopItem {
     name = "howdy";
