@@ -1,12 +1,23 @@
+From be186921c41f640486994509b719cc76a95ec33e Mon Sep 17 00:00:00 2001
+From: Shogo Takata <peshogo@gmail.com>
+Date: Mon, 28 Jul 2025 23:19:29 +0900
+Subject: [PATCH] Fix python path for howdy-gtk
+
+---
+ howdy-gtk/meson.build | 1 +
+ 1 file changed, 1 insertion(+)
+
 diff --git a/howdy-gtk/meson.build b/howdy-gtk/meson.build
 index f497056..d705ef2 100644
 --- a/howdy-gtk/meson.build
 +++ b/howdy-gtk/meson.build
 @@ -25,6 +25,7 @@ sources = files(
  )
- 
+
  py = import('python').find_installation(
 +    paths_dict.get('python_path')
      # modules: ['gi', 'elevate']
  )
  py.dependency()
+--
+2.50.0
