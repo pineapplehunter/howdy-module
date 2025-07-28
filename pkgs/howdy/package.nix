@@ -9,8 +9,6 @@
   ninja,
   pkg-config,
   wrapGAppsHook3,
-  makeDesktopItem,
-  makeWrapper,
   fmt,
   gettext,
   gtk3,
@@ -21,24 +19,30 @@
 }:
 
 let
-  data =
-    let
-      baseurl = "https://github.com/davisking/dlib-models/raw/fd81b6308a6a73d4ce08859eb2f4b628a21e27a2";
-    in
+  baseurl = "https://github.com/davisking/dlib-models/raw/fd81b6308a6a73d4ce08859eb2f4b628a21e27a2";
+  data = [
     {
-      "dlib_face_recognition_resnet_model_v1.dat" = fetchurl {
+      name = "dlib_face_recognition_resnet_model_v1.dat";
+      model = fetchurl {
         url = "${baseurl}/dlib_face_recognition_resnet_model_v1.dat.bz2";
         hash = "sha256-q7H2EEHkNEZYVc6Bwr1UboMNKLy+2NJ/++W7QIsRVTo=";
       };
-      "mmod_human_face_detector.dat" = fetchurl {
+    }
+    {
+      name = "mmod_human_face_detector.dat";
+      model = fetchurl {
         url = "${baseurl}/mmod_human_face_detector.dat.bz2";
         hash = "sha256-256eQPCSwRjV6z5kOTWyFoOBcHk1WVFVQcVqK1DZ/IQ=";
       };
-      "shape_predictor_5_face_landmarks.dat" = fetchurl {
+    }
+    {
+      name = "shape_predictor_5_face_landmarks.dat";
+      model = fetchurl {
         url = "${baseurl}/shape_predictor_5_face_landmarks.dat.bz2";
         hash = "sha256-bnh7vr9cnv23k/bNHwIyMMRBMwZgXyTymfEoaflapHI=";
       };
-    };
+    }
+  ];
 
   # wrap howdy and howdy-gtk
   py =
@@ -56,19 +60,6 @@ let
           "--set OMP_NUM_THREADS 1"
         ];
       });
-
-  desktopItem = makeDesktopItem {
-    name = "howdy";
-    exec = "howdy-gtk";
-    icon = "howdy";
-    comment = "Howdy facial authentication";
-    desktopName = "Howdy";
-    genericName = "Facial authentication";
-    categories = [
-      "System"
-      "Security"
-    ];
-  };
 in
 stdenv.mkDerivation {
   pname = "howdy";
@@ -89,8 +80,8 @@ stdenv.mkDerivation {
 
   mesonFlags = [
     "-Dconfig_dir=/etc/howdy"
-    "-Duser_models_dir=/var/lib/howdy/models"
     "-Dpython_path=${py}/bin/python"
+    "-Duser_models_dir=/var/lib/howdy/models"
   ];
 
   nativeBuildInputs = [
@@ -100,7 +91,6 @@ stdenv.mkDerivation {
     ninja
     pkg-config
     wrapGAppsHook3
-    makeWrapper
   ];
 
   buildInputs = [
@@ -113,39 +103,12 @@ stdenv.mkDerivation {
     py
   ];
 
-  postInstall =
-    let
-      inherit (lib) mapAttrsToList concatStrings;
-    in
-    ''
-      # install dlib data
-      rm -rf $out/share/dlib-data/*
-      ${concatStrings (
-        mapAttrsToList (n: v: ''
-          bzip2 -dc ${v} > $out/share/dlib-data/${n}
-        '') data
-      )}
-
-      # install desktop item & image
-      mkdir -p $out/share/applications
-      mkdir -p $out/share/icons/hicolor/{48x48,128x128,256x256}/apps
-      cp "${desktopItem}"/share/applications/* "$out/share/applications/"
-      ln -s "$out/share/howdy-gtk/logo.png" $out/share/icons/hicolor/48x48/apps/howdy.png
-      ln -s "$out/share/howdy-gtk/logo.png" $out/share/icons/hicolor/128x128/apps/howdy.png
-      ln -s "$out/share/howdy-gtk/logo.png" $out/share/icons/hicolor/256x256/apps/howdy.png
-    '';
-
-  dontWrapGApps = true;
-  dontInstallCheck = true;
-
-  preFixup = ''
-    wrapProgramShell $out/bin/howdy \
-      "''${gappsWrapperArgs[@]}" \
-      --prefix PATH : ${lib.makeBinPath [ py ]}
-
-    wrapProgramShell $out/bin/howdy-gtk \
-      "''${gappsWrapperArgs[@]}" \
-      --prefix PATH : ${lib.makeBinPath [ py ]}
+  postInstall = ''
+    # install dlib data
+    rm -rf $out/share/dlib-data/*
+    ${lib.concatStringsSep "\n" (
+      map ({ name, model }: "bzip2 -dc ${model} > $out/share/dlib-data/${name}") data
+    )}
   '';
 
   meta = {
