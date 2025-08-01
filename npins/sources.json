@@ -1,10 +1,33 @@
 {
   "pins": {
+    "flake-compat": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "edolstra",
+        "repo": "flake-compat"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.1.0",
+      "revision": "ff81ac966bb2cae68946d5ed5fc4994f96d0ffec",
+      "url": "https://api.github.com/repos/edolstra/flake-compat/tarball/v1.1.0",
+      "hash": "19d2z6xsvpxm184m41qrpi1bplilwipgnzv9jy17fgw421785q1m"
+    },
     "nixpkgs": {
-      "type": "Channel",
-      "name": "nixpkgs-unstable",
-      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-25.11pre834555.0d00f23f023b/nixexprs.tar.xz",
-      "hash": "1yz6zpkra0s1q0xmhr0z7pfwp627d8px45szh6zwr5a7y75fn44h"
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nixos",
+        "repo": "nixpkgs"
+      },
+      "branch": "nixos-unstable",
+      "submodules": false,
+      "revision": "dc9637876d0dcc8c9e5e22986b857632effeb727",
+      "url": "https://github.com/nixos/nixpkgs/archive/dc9637876d0dcc8c9e5e22986b857632effeb727.tar.gz",
+      "hash": "18v69550f4p2khyq0hhj985q0j1rydpl2jxybssy4alz7svjza3h"
     }
   },
   "version": 5

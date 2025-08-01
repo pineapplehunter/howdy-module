@@ -1,10 +1,15 @@
 # for nix-update compatibility
 { ... }@args:
 let
+  # for pinning nixpkgs
   npins = import ./npins;
-  pkgs = import npins.nixpkgs args;
+  flake = (import npins.flake-compat { src = ./.; }).defaultNix;
+  overlays = [ flake.overlays.default ];
+  pkgs = import npins.nixpkgs ({ inherit overlays; } // args);
 in
-pkgs.lib.packagesFromDirectoryRecursive {
-  inherit (pkgs) callPackage;
-  directory = ./pkgs;
+{
+  inherit (pkgs)
+    howdy
+    linux-enable-ir-emitter
+    ;
 }
