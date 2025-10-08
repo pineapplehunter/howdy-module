@@ -15,13 +15,13 @@
 }:
 stdenv.mkDerivation rec {
   pname = "linux-enable-ir-emitter";
-  version = "6.1.1";
+  version = "6.1.2";
 
   src = fetchFromGitHub {
     owner = "EmixamPP";
     repo = "linux-enable-ir-emitter";
     rev = version;
-    hash = "sha256-Pi+PnhuvYXJEScMBhWDlo22iOlWpNFW0Q0OVjRkGpww=";
+    hash = "sha256-wSmWebX4H3Hj8bbFoVMq3DY3i/nKkQaeu3mXX0o6IaY=";
   };
 
   nativeBuildInputs = [
@@ -40,7 +40,10 @@ stdenv.mkDerivation rec {
     (opencv.override { enableGtk3 = true; })
   ];
 
-  env.NIX_CFLAGS_COMPILE = "-Wno-error=alloc-zero";
+  mesonFlags = [
+    "-Dcreate_config_dir=false"
+    "-Dcreate_log_dir=false"
+  ];
 
   meta = {
     description = "Provides support for infrared cameras that are not directly enabled out-of-the box";
